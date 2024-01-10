@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:google_books_api/google_books_api.dart';
 import 'package:http/http.dart' as http;
@@ -38,21 +39,39 @@ Future<void> searchBook() async {
 
 // this is the fetching with the google_books library
 
-Future<void> searchBooksWLibrary(String query) async {
-  final booksApi = GoogleBooksApi();
-  final results = await booksApi.searchBooks(
-      query
-  );
 
-  for( final volume in results){
-    print(volume.volumeInfo.imageLinks);
-  }
+Future<void> searchBooksWLibrary(String query) async {
+    final booksApi = GoogleBooksApi();
+
+    try {
+      final results = await booksApi.searchBooks(
+          query
+      );
+
+      if( results.isEmpty){
+        print("No Books To Be Fetched");
+      } else {
+        for( final volume in results){
+          print(volume.volumeInfo.title);
+        }
+      }
+    } on SearchFailedException catch (e){
+      print("Error: $e");
+    }
 }
 
 void main() async {
 print("Loading...");
-var bookData = await Future.delayed(Duration(seconds: 5), () =>
-    searchBooksWLibrary('A Court of Thorns and Roses')) ;
+print("Enter your book");
+String input = stdin.readLineSync()!;
+print("Fetching you're $input book");
+
+try {
+  await Future.delayed(Duration(seconds: 2), () => searchBooksWLibrary(input));
+} catch (e) {
+  print("An unexpected error occurred: $e");
+}
+
 
 
 }
