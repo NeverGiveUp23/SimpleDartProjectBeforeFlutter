@@ -14,6 +14,24 @@ void main() {
     }
   }
 
+  do {
+    print("Hello");
+  } while(isAllowed);
+
+
+  switch(isAllowed) {
+    case true:
+      print("Youre allowed");
+      break;
+    case false:
+      print("Youre not allowed");
+      break;
+    default:
+      print("Youre not allowed");
+  }
+
+
+
 
 
   String value = isAllowed == false ? "False" : "True";

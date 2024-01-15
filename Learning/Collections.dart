@@ -41,11 +41,12 @@ Future<void> searchBook() async {
 
 
 Future<void> searchBooksWLibrary(String query) async {
+
     final booksApi = GoogleBooksApi();
 
     try {
       final results = await booksApi.searchBooks(
-          query
+          query,
       );
 
       if( results.isEmpty){
@@ -53,6 +54,7 @@ Future<void> searchBooksWLibrary(String query) async {
       } else {
         for( final volume in results){
           print(volume.volumeInfo.title);
+          print(volume.volumeInfo.imageLinks);
         }
       }
     } on SearchFailedException catch (e){
