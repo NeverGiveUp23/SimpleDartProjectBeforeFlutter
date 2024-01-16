@@ -8,3 +8,4 @@ environment:
 
 dependencies:
   google_books_api: ^1.0.0
+  http: 0.13.5
